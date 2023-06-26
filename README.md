@@ -22,6 +22,18 @@ https://dummyjson.com/docs/todos
 - Vite
 - React
 
+### Demo App of Tasks
+
+```
+https://djaraweb.github.io/app-tasks-with-react
+```
+
+### Deploy App in gh-pages
+
+```
+npm run deploy-gh-pages
+```
+
 ## Frontend de la Aplicacion
 
 ![Interfaz de tareas](src/assets/AppTasksv1.png)
