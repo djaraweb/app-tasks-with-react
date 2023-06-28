@@ -8,18 +8,18 @@ import {
 } from 'react-icons/ri';
 
 function TaskItem({ item, onCompleteTask, onDeleteTask, onEditTask }) {
-  const { text, completed } = item;
+  const { id, todo, completed } = item;
   const [editTask, setEditTask] = useState(false);
-  const [inputTask, setInputTask] = useState(text);
+  const [inputTask, setInputTask] = useState(todo);
 
   const handleSaveEditTask = () => {
-    //console.log(inputTask, item);
-    onEditTask(text, inputTask);
+    //console.log(id, inputTask, '--', todo);
+    onEditTask(id, inputTask);
     setEditTask(false);
   };
   const handleCancelEditTask = () => {
     setEditTask(false);
-    setInputTask(text);
+    setInputTask(todo);
   };
 
   const handledOnChangeTask = (e) => {
@@ -40,7 +40,7 @@ function TaskItem({ item, onCompleteTask, onDeleteTask, onEditTask }) {
           )}
         </span>
         {!editTask ? (
-          <span className={completed ? 'line-through' : ''}>{text}</span>
+          <span className={completed ? 'line-through' : ''}>{todo}</span>
         ) : (
           <input
             className="w-full border-gray-100 border-b-2 bg-transparent py-1 pl-2x text-gray-500 focus:outline-none"

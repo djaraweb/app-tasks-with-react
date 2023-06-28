@@ -27,6 +27,8 @@ function App() {
     addTask,
     completedTasks,
     totalTasks,
+    nextTasks,
+    previousTasks,
   } = useTasks();
 
   return (
@@ -59,6 +61,8 @@ function App() {
             onActionFilter={setActionFilter}
             totalTasks={totalTasks}
             completedTasks={completedTasks}
+            onNext={nextTasks}
+            onPrevious={previousTasks}
           >
             {error && <p>Hubo un error</p>}
             {loading && <p>Estamos cargando, no desesperes ...</p>}
@@ -69,9 +73,9 @@ function App() {
             {searchedTasks.map((item) => (
               <TaskItem
                 item={item}
-                key={item.text}
-                onCompleteTask={() => completeTask(item.text)}
-                onDeleteTask={() => deleteTask(item.text)}
+                key={item.id}
+                onCompleteTask={() => completeTask(item.id)}
+                onDeleteTask={() => deleteTask(item.id)}
                 onEditTask={editTask}
               />
             ))}
