@@ -1,12 +1,12 @@
 import React from 'react';
 import { TaskCounter } from './TaskCounter';
 
-function TaskList({ children, onActionFilter }) {
+function TaskList({ children, onActionFilter, totalTasks, completedTasks }) {
   return (
     <section className="py-2">
       <ul className="">{children}</ul>
       <div className="flex items-center justify-end border-t-2 border-b-2 px-2 py-4 mt-4 mb-4">
-        <TaskCounter />
+        <TaskCounter totalTasks={totalTasks} completedTasks={completedTasks} />
       </div>
       <div className="flex items-center justify-between">
         <div className="flex gap-1">

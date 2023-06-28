@@ -1,8 +1,8 @@
-import { useState, useEffect, createContext } from 'react';
+//import connectionAxios from '../apiConnection';
+import { useState } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-export const TaskContext = createContext();
 
-const TaskProvider = (props) => {
+const useTasks = (props) => {
   // Nos traemos Task el estado y las funciones de nuestra aplicación que queremos globales
   const { Tasks, saveTasks, loading, error } = useLocalStorage('TaskS_v1', []);
 
@@ -69,30 +69,23 @@ const TaskProvider = (props) => {
   };
   // Retornamos nuestro proveedor con nuestro contexto en la etiqueta value, que recibirá a toda nuestra aplicación, por eso necesitamos la prop children
 
-  return (
-    <TaskContext.Provider
-      value={{
-        loading,
-        error,
-        totalTasks,
-        searchValue,
-        addTask,
-        completedTasks,
-        Tasks,
-        setActionFilter,
-        setSearchValue,
-        searchedTasks,
-        completeTask,
-        deleteTask,
-        editTask,
-        openModal,
-        setOpenModal,
-      }}
-    >
-      {props.children}
-    </TaskContext.Provider>
-  );
+  return {
+    loading,
+    error,
+    totalTasks,
+    searchValue,
+    addTask,
+    completedTasks,
+    Tasks,
+    setActionFilter,
+    setSearchValue,
+    searchedTasks,
+    completeTask,
+    deleteTask,
+    editTask,
+    openModal,
+    setOpenModal,
+  };
 };
 
-// Exportamos nuestro proveedor  para acceder a nuestro contexto
-export { TaskProvider };
+export { useTasks };

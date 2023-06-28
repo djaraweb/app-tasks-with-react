@@ -2,7 +2,6 @@ import { useContext, useEffect } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import { FaList } from 'react-icons/fa';
-import { TaskContext } from './context/TaskProvider';
 // Component
 import { TaskList } from './components/TaskList';
 import { TaskSearch } from './components/TaskSearch';
@@ -10,6 +9,7 @@ import { TaskItem } from './components/TaskItem';
 import { CreateTaskButton } from './components/CreateTaskButton';
 import { TaskCreate } from './components/TaskCreate';
 import { Modal } from './Modal';
+import { useTasks } from './hooks/useTasks';
 
 function App() {
   const {
@@ -22,7 +22,12 @@ function App() {
     openModal,
     setOpenModal,
     setActionFilter,
-  } = useContext(TaskContext);
+    searchValue,
+    setSearchValue,
+    addTask,
+    completedTasks,
+    totalTasks,
+  } = useTasks();
 
   return (
     <div className="p-6 h-screen ">
@@ -44,9 +49,17 @@ function App() {
         </div>
         {/* Body */}
         <div className="flex-1 w-full p-4">
-          <TaskSearch />
+          <TaskSearch
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            setActionFilter={setActionFilter}
+          />
 
-          <TaskList onActionFilter={setActionFilter}>
+          <TaskList
+            onActionFilter={setActionFilter}
+            totalTasks={totalTasks}
+            completedTasks={completedTasks}
+          >
             {error && <p>Hubo un error</p>}
             {loading && <p>Estamos cargando, no desesperes ...</p>}
             {!(!loading && !searchedTasks.lenght) && (
@@ -66,7 +79,7 @@ function App() {
 
           {!!openModal && (
             <Modal>
-              <TaskCreate />
+              <TaskCreate setOpenModal={setOpenModal} addTask={addTask} />
             </Modal>
           )}
 

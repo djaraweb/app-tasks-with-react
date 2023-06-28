@@ -1,8 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { TaskContext } from '../context/TaskProvider';
+import React, { useState } from 'react';
 
-function TaskCreate() {
-  const { setOpenModal, addTask } = useContext(TaskContext);
+function TaskCreate({ setOpenModal, addTask }) {
   const [newValueTask, setNewValueTask] = useState('');
 
   const onChange = (e) => {

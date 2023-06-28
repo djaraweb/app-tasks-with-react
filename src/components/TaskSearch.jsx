@@ -1,10 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { TaskContext } from '../context/TaskProvider';
 import { FaSearch } from 'react-icons/fa';
 
-function TaskSearch() {
-  const { searchValue, setSearchValue, setActionFilter } =
-    useContext(TaskContext);
+function TaskSearch({ searchValue, setSearchValue, setActionFilter }) {
   const onChangeSearchValue = (e) => {
     setActionFilter('search');
     setSearchValue(e.target.value);
