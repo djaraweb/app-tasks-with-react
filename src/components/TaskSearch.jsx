@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-function TaskSearch({ searchValue, setSearchValue, setActionFilter }) {
+function TaskSearch({ searchValue, setSearchValue, setActionFilter, loading }) {
   const onChangeSearchValue = (e) => {
     setActionFilter('search');
     setSearchValue(e.target.value);
@@ -14,10 +14,11 @@ function TaskSearch({ searchValue, setSearchValue, setActionFilter }) {
       </span>
       <input
         type="text"
-        className="block flex-1 h-12 border-0 bg-transparent py-1.5 pl-9  text-gray-800 placeholder:text-gray-400 focus:ring-0"
+        className="block flex-1 h-12 border-0 bg-transparent py-1.5 pl-9  text-gray-800 placeholder:text-gray-400 focus:ring-0 disabled:opacity-25  "
         placeholder="Enter a task to filter"
         onChange={onChangeSearchValue}
         value={searchValue}
+        disabled={loading}
       />
     </div>
   );

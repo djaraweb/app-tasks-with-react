@@ -1,8 +1,13 @@
 import { useContext, useEffect } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import { FaList } from 'react-icons/fa';
+// import reactLogo from './assets/react.svg';
+// import viteLogo from '/vite.svg';
+// import { FaList } from 'react-icons/fa';
 // Component
+import Error from './components/Error';
+import Loading from './components/Loading';
+import EmptyTasks from './components/EmptyTasks';
+import EmptySearchResults from './components/EmptySearchResults';
+
 import { TaskList } from './components/TaskList';
 import { TaskSearch } from './components/TaskSearch';
 import { TaskItem } from './components/TaskItem';
@@ -10,6 +15,7 @@ import { CreateTaskButton } from './components/CreateTaskButton';
 import { TaskCreate } from './components/TaskCreate';
 import { Modal } from './Modal';
 import { useTasks } from './hooks/useTasks';
+import TaskHeader from './components/TaskHeader';
 
 function App() {
   const {
@@ -34,43 +40,34 @@ function App() {
   return (
     <div className="p-6 h-screen ">
       <div className="flex flex-col w-full h-full  border rounded-xl overflow-hidden">
-        {/* Header   */}
-        <div className="bg-gray-100 w-full p-3 flex items-center justify-between">
-          <p className="flex items-center gap-1 font-semibold  ">
-            <FaList />
-            <span>Admin Tasks</span>
-          </p>
-          <div className="flex items-center justify-center">
-            <a href="https://vitejs.dev" target="_blank">
-              <img src={viteLogo} className="w-7 h-7 " alt="Vite logo" />
-            </a>
-            <a href="https://react.dev" target="_blank">
-              <img src={reactLogo} className="w-7 h-7 " alt="React logo" />
-            </a>
-          </div>
-        </div>
-        {/* Body */}
-        <div className="flex-1 w-full p-4">
+        <TaskHeader loading={loading}>
+          {/* Pasar la propiedad loading a cada uno de sus componentes hijos (children) */}
           <TaskSearch
             searchValue={searchValue}
             setSearchValue={setSearchValue}
             setActionFilter={setActionFilter}
+            //loading={loading}
           />
-
+        </TaskHeader>
+        {/* Body */}
+        <div className="flex-1 w-full p-4">
           <TaskList
+            error={error}
+            loading={loading}
+            searchedTasks={searchedTasks}
+            searchText={searchValue}
             onActionFilter={setActionFilter}
             totalTasks={totalTasks}
             completedTasks={completedTasks}
             onNext={nextTasks}
             onPrevious={previousTasks}
-          >
-            {error && <p>Hubo un error</p>}
-            {loading && <p>Estamos cargando, no desesperes ...</p>}
-            {!(!loading && !searchedTasks.lenght) && (
-              <p>¡Crea tu primer Task!</p>
+            onError={() => <Error />}
+            onLoading={() => <Loading />}
+            onEmptyTasks={() => <EmptyTasks />}
+            onEmptySearchResults={(search) => (
+              <EmptySearchResults searchText={search} />
             )}
-
-            {searchedTasks.map((item) => (
+            render={(item) => (
               <TaskItem
                 item={item}
                 key={item.id}
@@ -78,8 +75,8 @@ function App() {
                 onDeleteTask={() => deleteTask(item.id)}
                 onEditTask={editTask}
               />
-            ))}
-          </TaskList>
+            )}
+          ></TaskList>
 
           {!!openModal && (
             <Modal>

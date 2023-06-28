@@ -55,6 +55,7 @@ const useTasks = (props) => {
           const { todos } = response.data;
           localStorage.setItem(itemLocalStorage, JSON.stringify(todos));
           setTasks(todos);
+          setError('');
         })
         .catch((error) => {
           setError(error);
